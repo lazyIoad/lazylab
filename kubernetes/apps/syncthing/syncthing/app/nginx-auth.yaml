@@ -1,0 +1,19 @@
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: nginx-htpasswd
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword-connect
+  refreshInterval: 1h
+  target:
+    name: nginx-htpasswd
+    template:
+      data:
+        htpasswd: "{{ .htpasswd }}"
+  dataFrom:
+    - extract:
+        key: syncthing
+        decodingStrategy: None

@@ -1,0 +1,19 @@
+---
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: macvlan-homelab
+spec:
+  config: '{
+    "cniVersion": "1.0.0",
+    "type": "macvlan",
+    "master": "eth0",
+    "mode": "bridge",
+    "ipam": {
+      "type": "dhcp",
+      "subnet": "192.168.4.0/24",
+      "rangeStart": "192.168.4.128",
+      "rangeEnd": "192.168.4.199",
+      "gateway": "192.168.4.1"
+      }
+    }'

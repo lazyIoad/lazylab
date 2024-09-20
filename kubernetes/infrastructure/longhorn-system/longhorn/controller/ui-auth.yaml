@@ -1,0 +1,19 @@
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: ui-auth
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword-connect
+  refreshInterval: 1h
+  target:
+    name: ui-auth
+    template:
+      data:
+        auth: "{{ .htpasswd }}"
+  dataFrom:
+    - extract:
+        key: longhorn
+        decodingStrategy: None

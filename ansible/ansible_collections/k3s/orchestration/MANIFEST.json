@@ -1,0 +1,42 @@
+{
+ "collection_info": {
+  "namespace": "k3s",
+  "name": "orchestration",
+  "version": "1.0.0",
+  "authors": [
+   "Julien DOCHE <julien.doche@gmail.com>",
+   "Derek Nola <derek.nola@suse.com>",
+   "David Putzolu <dputzolu@gmail.com>",
+   "Jeff Geerling <geerlingguy@mac.com>",
+   "Staf Wagemakers <staf@wagemakers.be>",
+   "Vincent RABAH <vincent.rabah@gmail.com>"
+  ],
+  "readme": "README.md",
+  "tags": [
+   "infrastructure",
+   "linux",
+   "tools"
+  ],
+  "description": "Build a Kubernetes cluster using K3s via Ansible",
+  "license": [
+   "Apache-2.0"
+  ],
+  "license_file": null,
+  "dependencies": {
+   "community.general": ">=7.0.0",
+   "ansible.posix": ">=1.5.0"
+  },
+  "repository": "https://github.com/k3s-io/k3s-ansible",
+  "documentation": "https://github.com/k3s-io/k3s-ansible/blob/master/README.md",
+  "homepage": "https://github.com/k3s-io/k3s-ansible",
+  "issues": "https://github.com/k3s-io/k3s-ansible/issues"
+ },
+ "file_manifest_file": {
+  "name": "FILES.json",
+  "ftype": "file",
+  "chksum_type": "sha256",
+  "chksum_sha256": "282f9742996b331032f49f4b0ccf7da11cf4909dc8f4c60ec393ac87b8c5cf5b",
+  "format": 1
+ },
+ "format": 1
+}

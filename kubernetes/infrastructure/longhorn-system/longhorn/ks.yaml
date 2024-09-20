@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: longhorn
+  namespace: flux-system
+spec:
+  targetNamespace: longhorn-system
+  dependsOn:
+    - name: onepassword-connect
+    - name: external-secrets
+    - name: cert-manager
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./kubernetes/infrastructure/longhorn-system/longhorn/controller
+  prune: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m

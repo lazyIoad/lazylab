@@ -1,0 +1,46 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook
+- name: Host setup
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Ping my hosts
+      ansible.builtin.ping:
+
+    - name: Do base OS setup
+      include_role:
+        name: lazyload.os
+
+    - name: Set hostname
+      ansible.builtin.hostname:
+        name: "{{ hostname }}"
+
+    - name: Create admin user
+      ansible.builtin.user:
+        name: lazyload
+        shell: /usr/bin/bash
+        create_home: true
+        groups: sudo
+        password: "{{ lookup('env', 'ADMIN_USER_PASSWORD') }}"
+
+    - name: Allow SSH into admin user
+      ansible.posix.authorized_key:
+        user: lazyload
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHpmLmbTkIoekLsp+H47NHrBIuUIe6wyfTn1ce/CDNx7"
+
+    - name: Basic security setup
+      include_role:
+        name: geerlingguy.security
+      vars:
+        security_ssh_allowed_users:
+          - lazyload
+        security_sudoers_passwordless:
+          - lazyload
+        security_autoupdate_reboot: false
+
+    - name: Set up Tailscale
+      include_role:
+        name: artis3n.tailscale
+      vars:
+        tailscale_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"

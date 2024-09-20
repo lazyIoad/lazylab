@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook
+- name: Install k3s
+  ansible.builtin.import_playbook: k3s.orchestration.reset
+
+- name: Cleanup extra files
+  hosts: k3s_cluster
+  become: true
+  tasks:
+    - name: Delete config directory
+      ansible.builtin.file:
+        path: "/etc/rancher/k3s/config.yaml.d"
+        state: absent
+    - name: Delete longhorn data directory
+      ansible.builtin.file:
+        path: "/data/longhorn"
+        state: absent
+    - name: Delete longhorn data directory
+      ansible.builtin.file:
+        path: "/var/lib/longhorn"
+        state: absent
+
+- name: Reboot all nodes
+  hosts: k3s_cluster
+  become: true
+  tasks:
+    - name: Reboot
+      ansible.builtin.reboot:

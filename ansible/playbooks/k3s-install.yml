@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook
+- name: Set up storage config
+  become: true
+  hosts: storage
+  tasks:
+    - name: Make config directory
+      ansible.builtin.file:
+        path: "/etc/rancher/k3s/config.yaml.d"
+        mode: "0755"
+        state: directory
+    - name: Create storage config
+      ansible.builtin.copy:
+        dest: "/etc/rancher/k3s/config.yaml.d/storage-labels.yaml"
+        mode: "0644"
+        content: |
+          ---
+          node-label:
+            - storage=longhorn
+            - node.longhorn.io/create-default-disk=true
+
+- name: Add quadratus-3 node taint
+  become: true
+  hosts: quadratus-3
+  tasks:
+    - name: Make config directory
+      ansible.builtin.file:
+        path: "/etc/rancher/k3s/config.yaml.d"
+        mode: "0755"
+        state: directory
+    - name: Create storage config
+      ansible.builtin.copy:
+        dest: "/etc/rancher/k3s/config.yaml.d/storage-taints.yaml"
+        mode: "0644"
+        content: |
+          ---
+          node-taint:
+            - "slow-storage=true:NoSchedule"
+
+- name: Install k3s
+  ansible.builtin.import_playbook: k3s.orchestration.site
+  vars:
+    ansible_port: 22
+    k3s_version: v1.30.2+k3s1
+    token: "{{ lookup('env', 'K3S_TOKEN') }}"
+    api_endpoint: "{{ hostvars[groups['server'][0]]['ansible_host'] | default(groups['server'][0]) }}"
+    extra_server_args: "--disable servicelb --disable traefik"
+    extra_agent_args: ""
+    kubeconfig: ~/.kube/config
+    cluster_context: lazylab

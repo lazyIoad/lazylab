@@ -1,0 +1,19 @@
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: datadog-api-key
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword-connect
+  refreshInterval: 1h
+  target:
+    name: datadog-api-key
+    template:
+      data:
+        api-key: "{{ .apikey }}"
+  dataFrom:
+    - extract:
+        key: datadog
+        decodingStrategy: Base64

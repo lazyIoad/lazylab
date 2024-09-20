@@ -1,0 +1,50 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    external-dns.alpha.kubernetes.io/hostname: box.lazylab.casa
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - box.lazylab.casa
+      secretName: box-tls
+  rules:
+    - host: box.lazylab.casa
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: syncthing-gui
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    external-dns.alpha.kubernetes.io/hostname: syncthing.lazylab.casa
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - syncthing.lazylab.casa
+      secretName: syncthing-gui-tls
+  rules:
+    - host: syncthing.lazylab.casa
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: syncthing-gui
+                port:
+                  number: 8384

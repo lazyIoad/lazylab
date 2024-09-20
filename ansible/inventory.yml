@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/inventory.json
+k3s_cluster:
+  children:
+    server:
+      hosts:
+        quadratus-1:
+          ansible_host: 192.168.4.79
+          hostname: quadratus-1
+        quadratus-2:
+          ansible_host: 192.168.4.54
+          hostname: quadratus-2
+        quadratus-3:
+          ansible_host: 192.168.4.24
+          hostname: quadratus-3
+
+    agent:
+      hosts:
+        hydrus:
+          ansible_host: 192.168.4.64
+          hostname: hydrus
+        kuromori:
+          ansible_host: 192.168.4.97
+          hostname: kuromori
+
+storage:
+  hosts:
+    hydrus:
+    kuromori:

@@ -1,0 +1,11 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - statefulset.yaml
+  - pvcs.yaml
+  - services.yaml
+  - ingresses.yaml
+  - init-scripts.yaml
+  - nginx-auth.yaml
+  - nginx-config.yaml
