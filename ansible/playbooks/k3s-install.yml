@@ -41,7 +41,7 @@
   ansible.builtin.import_playbook: k3s.orchestration.site
   vars:
     ansible_port: 22
-    k3s_version: v1.30.2+k3s1
+    k3s_version: "{{ k3s_version }}"
     token: "{{ lookup('env', 'K3S_TOKEN') }}"
     api_endpoint: "{{ hostvars[groups['server'][0]]['ansible_host'] | default(groups['server'][0]) }}"
     extra_server_args: "--disable servicelb --disable traefik"
