@@ -7,8 +7,6 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: syncthing
-  dependsOn:
-    - name: onepassword-connect
   sourceRef:
     kind: GitRepository
     name: flux-system
