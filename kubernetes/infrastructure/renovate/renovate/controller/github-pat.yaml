@@ -1,0 +1,19 @@
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: github-pat
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword-connect
+  refreshInterval: 1h
+  target:
+    name: github-pat
+    template:
+      data:
+        RENOVATE_TOKEN: "{{ .renovatepat }}"
+  dataFrom:
+    - extract:
+        key: github
+        decodingStrategy: None
