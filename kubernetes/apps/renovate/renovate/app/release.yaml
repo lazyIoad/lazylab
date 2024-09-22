@@ -15,7 +15,7 @@ spec:
         name: renovate
         namespace: renovate
   values:
-    secrets: github-pat
+    existingSecret: github-pat
     renovate:
       config: |-
         {

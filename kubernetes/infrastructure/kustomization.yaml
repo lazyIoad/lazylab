@@ -11,4 +11,3 @@ resources:
   - longhorn-system
   - metallb-system
   - multus
-  - renovate
