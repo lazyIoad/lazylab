@@ -74,7 +74,7 @@
    "name": "roles/k3s_server/tasks/main.yml",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "7de4104cded6f0d7d93cd653ca97a31d3e216bc47097f99a0265a4e9f50c2958",
+   "chksum_sha256": "71c3645f3e43139f54913890b487e3d127dba1204c261646490d4d513d7f8cf1",
    "format": 1
   },
   {
@@ -102,21 +102,21 @@
    "name": "roles/k3s_server/templates/k3s-single.service.j2",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "92de9acf30e99458520ec78589601af7a7205467d02271b8ff8fa34ffd7c4831",
+   "chksum_sha256": "9c7e8410797ba80387e52b2d98213de769e000a5ff5d2963a449bc6da013fa4e",
    "format": 1
   },
   {
    "name": "roles/k3s_server/templates/k3s-ha.service.j2",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "605f6468ee7e4ef3c7bb48d72968c3184223369142a40c76b6647d72cb3a45a0",
+   "chksum_sha256": "a9233732f095d22718b2de64587ad5e1684dbadedce0e2ec95618e14e1008ebe",
    "format": 1
   },
   {
    "name": "roles/k3s_server/templates/k3s-cluster-init.service.j2",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "1e41aee2ce636e69814726a8a4d27f23ee725042ce9c47a8f10c5cfb55565080",
+   "chksum_sha256": "a6d58a51dca51296a8f5acf6107492c5b6a2899a8ef155d551867439d17a1ea5",
    "format": 1
   },
   {
@@ -137,7 +137,7 @@
    "name": "roles/k3s_agent/tasks/main.yml",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "df113fc6083bc2c64762ede41134d5691391884063361871de5ae184d0ec936f",
+   "chksum_sha256": "0947fd44983199d804469df31ac0810c8ace875f0f2a4b8bce9819f75324e372",
    "format": 1
   },
   {
@@ -165,7 +165,7 @@
    "name": "roles/k3s_agent/templates/k3s-agent.service.j2",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "446d4e239dd3e471a81963e78fd20b63ce3abb1e9a1eed7097ea6bcef47ae53c",
+   "chksum_sha256": "4fefe5350969e93f1c321a693ade6909c54571c2c2013be1d3af52e6720f508b",
    "format": 1
   },
   {
@@ -326,7 +326,7 @@
    "name": "roles/raspberrypi/tasks/prereq/Raspbian.yml",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "e57d00aadfd108be6a70ac8bcae217b097ad378cbe89ef21e0258cc94073d3fc",
+   "chksum_sha256": "c6926aea3114c0d98d2b05d020a0cc6bc95afd99a0e99e2c55b3d4d5ad09287e",
    "format": 1
   },
   {
