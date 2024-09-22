@@ -44,7 +44,7 @@ spec:
             - name: data
               mountPath: /data
         - name: nginx
-          image: registry.hub.docker.com/library/nginx:1.27.0
+          image: registry.hub.docker.com/library/nginx:1.27.1
           ports:
             - containerPort: 80
               name: http
