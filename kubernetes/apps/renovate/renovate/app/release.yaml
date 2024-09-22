@@ -17,7 +17,7 @@ spec:
   values:
     existingSecret: github-pat
     cronjob:
-      ttlSecondsAfterFinished: 1h
+      successfulJobsHistoryLimit: 5
     renovate:
       config: |-
         {
@@ -51,6 +51,13 @@ spec:
               ]
             }
           },
+          "packageRules": [
+            {
+              "matchUpdateTypes": ["minor", "patch"],
+              "automerge": true
+            }
+          ],
+          "ignoreTests": true,
           "kubernetes": {
             "fileMatch": ["^kubernetes/.+\\.yaml$"]
           },
