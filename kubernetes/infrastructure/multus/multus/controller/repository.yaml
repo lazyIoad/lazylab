@@ -4,6 +4,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: rke2-charts
+  namespace: multus
 spec:
   interval: 1h
   url: https://rke2-charts.rancher.io
