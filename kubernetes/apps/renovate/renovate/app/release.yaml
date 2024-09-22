@@ -32,6 +32,16 @@ spec:
           "platform": "github",
           "repositories": ["lazyIoad/lazylab"],
           "ignorePaths": ["ansible/ansible_collections/**", "ansible/roles/**"],
+          "customManagers": [
+            {
+              "customType": "regex",
+              "fileMatch": ["k3s_cluster.yml"],
+              "matchStrings": ["k3s_version:\\s*(?<currentValue>\\S+)"],
+              "depNameTemplate": "k3s",
+              "versioningTemplate": "semver-coerced",
+              "datasourceTemplate": "custom.k3s"
+            }
+          ],
           "customDatasources": {
             "k3s": {
               "defaultRegistryUrlTemplate": "https://update.k3s.io/v1-release/channels",
