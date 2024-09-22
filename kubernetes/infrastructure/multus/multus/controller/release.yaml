@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: rke2-multus
-      version: 4.1.000
+      version: "4.1.000"
       sourceRef:
         kind: HelmRepository
         name: rke2-charts
