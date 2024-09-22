@@ -24,6 +24,7 @@ spec:
           "extends": [
             ":dependencyDashboard",
             ":semanticPrefixFixDepsChoreOthers",
+            "group:allNonMajor",
             "group:monorepos",
             "group:recommended",
             "replacements:all",
