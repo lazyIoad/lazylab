@@ -16,6 +16,8 @@ spec:
         namespace: renovate
   values:
     existingSecret: github-pat
+    cronjob:
+      ttlSecondsAfterFinished: 1h
     renovate:
       config: |-
         {
