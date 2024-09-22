@@ -5,12 +5,6 @@
     upgrade: full
     update_cache: true
 
-- name: Check if a reboot is required
-  ansible.builtin.stat:
-    path: /var/run/reboot-required
-    get_checksum: false
-  register: reboot_required_file
-
 - name: Install other dependencies
   ansible.builtin.apt:
     pkg:

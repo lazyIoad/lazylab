@@ -14,6 +14,10 @@ ansible-k3s-install:
 ansible-k3s-uninstall:
   cd ansible && ansible-playbook -i inventory.yml playbooks/k3s-uninstall.yml
 
+# Update OS & k3s for cluster nodes
+ansible-update:
+  cd ansible && ansible-playbook -i inventory.yml playbooks/update.yml
+
 # Bootstrap kubernetes cluster
 k8s-bootstrap: ansible-k3s-install flux-bootstrap sops-bootstrap
 
