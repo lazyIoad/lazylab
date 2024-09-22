@@ -1,0 +1,10 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook
+- name: Set up docker
+  hosts: docker
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Run docker install
+      ansible.builtin.include_role:
+        name: lazyload.docker

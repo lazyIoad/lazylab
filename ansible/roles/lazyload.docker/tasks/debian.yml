@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/tasks
+- name: Add Docker GPG key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Set up the repository
+  ansible.builtin.apt_repository:
+    repo: deb https://download.docker.com/linux/debian
+      {{ ansible_distribution_release }} stable
+    state: present
+
+- name: Perform an apt-update
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install docker
+  ansible.builtin.apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+
+- name: Add admin user to docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true

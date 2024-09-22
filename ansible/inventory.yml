@@ -1,5 +1,11 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/inventory.json
+docker:
+  hosts:
+    malus:
+      ansible_host: 20.96.203.181
+      hostname: malus
+
 k3s_cluster:
   children:
     server:
