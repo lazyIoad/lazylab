@@ -21,7 +21,14 @@ spec:
     renovate:
       config: |-
         {
-          "extends": ["config:recommended"],
+          "extends": [
+            ":dependencyDashboard",
+            ":semanticPrefixFixDepsChoreOthers",
+            "group:monorepos",
+            "group:recommended",
+            "replacements:all",
+            "workarounds:all"
+          ],
           "platform": "github",
           "repositories": ["lazyIoad/lazylab"],
           "ignorePaths": ["ansible/ansible_collections/**", "ansible/roles/**"],
