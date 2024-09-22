@@ -21,5 +21,9 @@ spec:
         {
           "extends": ["config:recommended"],
           "platform": "github",
-          "repositories": ["lazyIoad/lazylab"]
+          "repositories": ["lazyIoad/lazylab"],
+          "ignorePaths": ["**/ansible/ansible_collections/**", "**/ansible/roles/**"],
+          "kubernetes": {
+            "fileMatch": ["^kubernetes/.+\\.yaml$"]
+          }
         }
