@@ -8,9 +8,7 @@ metadata:
 spec:
   targetNamespace: longhorn-system
   dependsOn:
-    - name: onepassword-connect
-    - name: external-secrets
-    - name: cert-manager
+    - name: external-secrets-stores
   sourceRef:
     kind: GitRepository
     name: flux-system
