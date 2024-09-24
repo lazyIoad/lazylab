@@ -8,7 +8,7 @@ spec:
   interval: 10m
   chart:
     spec:
-      chart: nimbolus
+      chart: system-upgrade-controller
       version: 0.4.1
       sourceRef:
         kind: HelmRepository
