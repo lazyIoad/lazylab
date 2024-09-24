@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook
-- name: Install k3s
+- name: Uninstall k3s
   ansible.builtin.import_playbook: k3s.orchestration.reset
 
 - name: Cleanup extra files
@@ -18,6 +18,10 @@
     - name: Delete longhorn data directory
       ansible.builtin.file:
         path: "/var/lib/longhorn"
+        state: absent
+    - name: Delete rancher data directory
+      ansible.builtin.file:
+        path: "/var/lib/rancher"
         state: absent
 
 - name: Reboot all nodes
