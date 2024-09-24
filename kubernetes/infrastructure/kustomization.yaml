@@ -11,3 +11,4 @@ resources:
   - longhorn-system
   - metallb-system
   - multus
+  - system-upgrade-controller
