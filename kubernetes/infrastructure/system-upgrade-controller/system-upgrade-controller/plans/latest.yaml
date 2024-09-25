@@ -16,7 +16,9 @@ spec:
       - { key: k3os.io/mode, operator: DoesNotExist }
       - { key: node-role.kubernetes.io/control-plane, operator: Exists }
   serviceAccountName: system-upgrade
-  cordon: true
+  drain:
+    force: true
+    skipWaitForDeleteTimeout: 60 # honor pod disruption budgets up to 60 seconds per pod then moves on
   upgrade:
     image: rancher/k3s-upgrade
 ---
