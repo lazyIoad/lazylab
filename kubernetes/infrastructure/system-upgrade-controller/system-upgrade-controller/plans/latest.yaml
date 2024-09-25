@@ -8,6 +8,7 @@ metadata:
     k3s-upgrade: server
 spec:
   concurrency: 1 # Batch size (roughly maps to maximum number of unschedulable nodes)
+  # renovate: k3s
   version: v1.30.4+k3s1
   nodeSelector:
     matchExpressions:
@@ -29,6 +30,7 @@ metadata:
     k3s-upgrade: agent
 spec:
   concurrency: 1 # Batch size (roughly maps to maximum number of unschedulable nodes)
+  # renovate: k3s
   version: v1.30.4+k3s1
   nodeSelector:
     matchExpressions:

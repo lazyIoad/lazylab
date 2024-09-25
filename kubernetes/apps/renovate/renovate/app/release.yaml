@@ -36,8 +36,8 @@ spec:
           "customManagers": [
             {
               "customType": "regex",
-              "fileMatch": ["k3s_cluster.yml"],
-              "matchStrings": ["k3s_version:\\s*(?<currentValue>\\S+)"],
+              "fileMatch": ["k3s_cluster.yml", "latest.yaml"],
+              "matchStrings": ["#\\s*renovate:\\s*k3s*\\s*\\w*:\\s*(?<currentValue>\\S+)"],
               "depNameTemplate": "k3s",
               "versioningTemplate": "semver-coerced",
               "datasourceTemplate": "custom.k3s"
