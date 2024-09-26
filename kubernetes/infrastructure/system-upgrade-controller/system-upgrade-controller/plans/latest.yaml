@@ -9,7 +9,7 @@ metadata:
 spec:
   concurrency: 1 # Batch size (roughly maps to maximum number of unschedulable nodes)
   # renovate: k3s
-  version: v1.30.4+k3s1
+  version: v1.30.5+k3s1
   nodeSelector:
     matchExpressions:
       - { key: k3s-upgrade, operator: NotIn, values: ["disabled", "false"] }
@@ -34,7 +34,7 @@ metadata:
 spec:
   concurrency: 1 # Batch size (roughly maps to maximum number of unschedulable nodes)
   # renovate: k3s
-  version: v1.30.4+k3s1
+  version: v1.30.5+k3s1
   nodeSelector:
     matchExpressions:
       - { key: k3s-upgrade, operator: NotIn, values: ["disabled", "false"] }
@@ -48,5 +48,6 @@ spec:
   drain:
     force: true
     skipWaitForDeleteTimeout: 60 # honor pod disruption budgets up to 60 seconds per pod then moves on
+    ignoreDaemonSets: true
   upgrade:
     image: rancher/k3s-upgrade
