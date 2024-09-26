@@ -16,10 +16,10 @@ spec:
         namespace: longhorn-system
   values:
     persistence:
-      defaultClassReplicaCount: 2
+      defaultClassReplicaCount: 1
       defaultFsType: xfs
     defaultSettings:
-      defaultReplicaCount: 2
+      defaultReplicaCount: 1
       defaultDataLocality: best-effort
       createDefaultDiskLabeledNodes: true
       defaultDataPath: "/data/longhorn/"
