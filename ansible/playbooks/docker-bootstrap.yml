@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook
+- name: Docker bootstrap
+  hosts: docker
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Perform an apt-update
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Install required packages
+      ansible.builtin.apt:
+        pkg:
+          - parted
+
+    - name: Create a main partition on /dev/sda
+      community.general.parted:
+        device: /dev/sda
+        number: 1
+        state: present
+        fs_type: xfs
+
+    - name: Make mount directory
+      ansible.builtin.file:
+        path: /mnt/data
+        mode: "0755"
+        state: directory
+
+    - name: Mount /dev/sda
+      ansible.posix.mount:
+        path: /mnt/data
+        src: /dev/sda1
+        fstype: xfs
+        state: present
+
+    - name: Create docker options
+      ansible.builtin.copy:
+        dest: "/etc/docker/daemon.json"
+        mode: "0644"
+        content: |
+          {
+            "data-root": "/mnt/data"
+          }

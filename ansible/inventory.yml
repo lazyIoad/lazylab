@@ -28,8 +28,12 @@ k3s_cluster:
         kuromori:
           ansible_host: 192.168.4.97
           hostname: kuromori
+        avion:
+          ansible_host: 192.168.4.96
+          hostname: avion
 
 storage:
   hosts:
     hydrus:
     kuromori:
+    avion:
