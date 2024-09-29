@@ -1,0 +1,4 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook
+- name: Update k3s
+  ansible.builtin.import_playbook: k3s.orchestration.upgrade

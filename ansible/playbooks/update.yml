@@ -2,7 +2,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook
 - name: Update system
   become: true
-  hosts: all
+  hosts: k3s_cluster
+  serial: 1
   tasks:
     - name: Perform an apt-upgrade
       ansible.builtin.apt:
@@ -20,6 +21,3 @@
     - name: Reboot the server if required
       ansible.builtin.reboot:
       when: reboot_required_file.stat.exists
-
-- name: Update k3s
-  ansible.builtin.import_playbook: k3s.orchestration.upgrade
