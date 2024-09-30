@@ -62,6 +62,7 @@ spec:
             }
           ],
           "ignoreTests": true,
+          "prHourlyLimit": 0,
           "kubernetes": {
             "fileMatch": ["^kubernetes/.+\\.yaml$"]
           },
