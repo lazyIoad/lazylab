@@ -15,13 +15,6 @@ spec:
         name: immich
         namespace: immich
   values:
-    env:
-      - name: DB_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: postgres-password
-            key: password
-
     immich:
       persistence:
         library:
