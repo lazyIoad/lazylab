@@ -20,7 +20,7 @@ spec:
       className: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-staging
-        external-dns.alpha.kubernetes.io/hostname: podinfo.lazylab.casa
+        external-dns.alpha.kubernetes.io/hostname: podinfo.lazylab.casa,podinfo2.lazylab.casa
       hosts:
         - host: podinfo.lazylab.casa
           paths:
