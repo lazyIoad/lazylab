@@ -1,0 +1,57 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: immich
+      version: 0.7.2
+      sourceRef:
+        kind: HelmRepository
+        name: immich
+        namespace: immich
+  values:
+    immich:
+      persistence:
+        library:
+          existingClaim: immich-data
+
+    machine-learning:
+      enabled: true
+      persistence:
+        cache:
+          type: pvc
+          accessMode: ReadWriteOnce
+          storageClass: longhorn
+
+    postgresql:
+      enabled: true
+      global:
+        postgresql:
+          auth:
+            existingSecret: postgres-password
+
+    redis:
+      enabled: true
+
+    server:
+      ingress:
+        main:
+          enabled: true
+          className: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-staging
+            external-dns.alpha.kubernetes.io/hostname: photos.lazylab.casa
+          hosts:
+            - host: photos.lazylab.casa
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - hosts:
+                - photos.lazylab.casa
+              secretName: immich-tls
