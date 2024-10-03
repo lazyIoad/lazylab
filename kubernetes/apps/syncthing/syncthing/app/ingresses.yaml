@@ -4,7 +4,7 @@ kind: Ingress
 metadata:
   name: nginx
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+    cert-manager.io/cluster-issuer: letsencrypt-production
     external-dns.alpha.kubernetes.io/hostname: box.lazylab.casa
 spec:
   ingressClassName: nginx
@@ -29,7 +29,7 @@ kind: Ingress
 metadata:
   name: syncthing-gui
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+    cert-manager.io/cluster-issuer: letsencrypt-production
     external-dns.alpha.kubernetes.io/hostname: syncthing.lazylab.casa
 spec:
   ingressClassName: nginx

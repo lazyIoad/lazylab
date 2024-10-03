@@ -19,7 +19,7 @@ spec:
       enabled: true
       className: nginx
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-staging
+        cert-manager.io/cluster-issuer: letsencrypt-production
         external-dns.alpha.kubernetes.io/hostname: podinfo.lazylab.casa
       hosts:
         - host: podinfo.lazylab.casa
