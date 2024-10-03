@@ -37,6 +37,24 @@
           node-taint:
             - "slow-storage=true:NoSchedule"
 
+- name: Add quadratus-2 node label
+  become: true
+  hosts: quadratus-2
+  tasks:
+    - name: Make config directory
+      ansible.builtin.file:
+        path: "/etc/rancher/k3s/config.yaml.d"
+        mode: "0755"
+        state: directory
+    - name: Create storage config
+      ansible.builtin.copy:
+        dest: "/etc/rancher/k3s/config.yaml.d/usb-labels.yaml"
+        mode: "0644"
+        content: |
+          ---
+          node-label:
+            - "usb=skyconnect"
+
 - name: Install k3s
   ansible.builtin.import_playbook: k3s.orchestration.site
   vars:
