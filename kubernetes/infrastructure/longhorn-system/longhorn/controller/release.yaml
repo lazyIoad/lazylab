@@ -19,6 +19,7 @@ spec:
       defaultClassReplicaCount: 2
       defaultFsType: xfs
       reclaimPolicy: Retain
+      defaultDataLocality: best-effort
     defaultSettings:
       defaultReplicaCount: 2
       defaultDataLocality: best-effort
