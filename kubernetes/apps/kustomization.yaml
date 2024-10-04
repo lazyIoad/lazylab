@@ -7,4 +7,4 @@ resources:
   - renovate
   - syncthing
   - immich
-  - home-assistant
+  # - home-assistant
