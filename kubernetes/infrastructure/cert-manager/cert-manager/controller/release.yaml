@@ -17,3 +17,4 @@ spec:
   values:
     crds:
       enabled: true
+    clusterResourceNamespace: cert-manager
