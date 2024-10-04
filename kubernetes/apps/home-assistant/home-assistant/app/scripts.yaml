@@ -14,11 +14,11 @@ data:
     # Check if the configuration file exists
     if [ ! -f /config/configuration.yaml ]; then
       echo "Configuration file not found, creating a new one"
-      cat << EOF >> /config/configuration.yaml
+      cat <<- EOF > /config/configuration.yaml
       default_config:
         http:
           use_x_forwarded_for: true
           trusted_proxies:
             - 10.0.0.0/8
-      EOF
+    EOF
     fi
