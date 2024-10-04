@@ -42,6 +42,11 @@ spec:
               mountPath: /config
             - name: scripts
               mountPath: /scripts/
+          env:
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
       volumes:
         - name: config
           persistentVolumeClaim:
