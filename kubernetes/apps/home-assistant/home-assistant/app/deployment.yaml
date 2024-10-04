@@ -28,15 +28,15 @@ spec:
             - name: server
               containerPort: 8123
           volumeMounts:
-            - name: home-assistant-config
+            - name: config
               mountPath: /config
-            - name: scripts-config
+            - name: scripts
               mountPath: /scripts/
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: home-assistant-config
-        - name: zigbee
+        - name: scripts
           configMap:
             name: scripts-config
             defaultMode: 0555
