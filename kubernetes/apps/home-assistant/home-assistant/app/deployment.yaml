@@ -16,6 +16,15 @@ spec:
         k8s.v1.cni.cncf.io/networks: multus/macvlan-homelab
     spec:
       terminationGracePeriodSeconds: 60
+      initContainers:
+        - name: create-config
+          image: registry.hub.docker.com/library/busybox:1.36.1
+          command: ["sh", "/scripts/config.sh"]
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: scripts
+              mountPath: /scripts/
       containers:
         - name: home-assistant
           image: ghcr.io/home-assistant/home-assistant:2024.10.0
