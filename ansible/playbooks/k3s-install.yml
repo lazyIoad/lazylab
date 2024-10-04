@@ -37,16 +37,16 @@
           node-taint:
             - "slow-storage=true:NoSchedule"
 
-- name: Add quadratus-2 node label
+- name: Set up quadratus-2
   become: true
   hosts: quadratus-2
   tasks:
-    - name: Make config directory
+    - name: Make k3s config directory
       ansible.builtin.file:
         path: "/etc/rancher/k3s/config.yaml.d"
         mode: "0755"
         state: directory
-    - name: Create storage config
+    - name: Create usb label
       ansible.builtin.copy:
         dest: "/etc/rancher/k3s/config.yaml.d/usb-labels.yaml"
         mode: "0644"
@@ -54,6 +54,21 @@
           ---
           node-label:
             - "usb=skyconnect"
+    - name: Create ser2net config
+      ansible.builtin.copy:
+        dest: "/etc/ser2net.yaml"
+        mode: "0644"
+        content: |
+          connection: &zigbee
+            accepter: ipv4,tcp,3333
+            enable: on
+            connector: serialdev,/dev/ttyUSB0,57600n81,local,nobreak
+            options:
+              kickolduser: true
+    - name: Install ser2net
+      ansible.builtin.apt:
+        pkg:
+          - ser2net
 
 - name: Install k3s
   ansible.builtin.import_playbook: k3s.orchestration.site
