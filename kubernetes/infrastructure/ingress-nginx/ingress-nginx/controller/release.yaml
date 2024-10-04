@@ -16,7 +16,7 @@ spec:
         namespace: ingress-nginx
   values:
     controller:
-      kind: DaemonSet
+      kind: Deployment
       service:
         annotations:
           metallb.universe.tf/loadBalancerIPs: 192.168.4.200
