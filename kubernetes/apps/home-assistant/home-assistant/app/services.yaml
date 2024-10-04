@@ -8,4 +8,5 @@ spec:
     - port: 80
       targetPort: 8123
       name: http
-  app: home-assistant
+  selector:
+    app: home-assistant
