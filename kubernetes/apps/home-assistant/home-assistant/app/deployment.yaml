@@ -32,7 +32,8 @@ spec:
             - sh
           args:
             - "-c"
-            - "/scripts/zigbee.sh && python -m homeassistant --config /config"
+            # - "/scripts/zigbee.sh && python -m homeassistant --config /config"
+            - python -m homeassistant --config /config"
           ports:
             - name: server
               containerPort: 8123
