@@ -43,10 +43,10 @@ spec:
             - name: scripts
               mountPath: /scripts/
           env:
-            - name: NODE_IP
+            - name: POD_IP
               valueFrom:
                 fieldRef:
-                  fieldPath: status.hostIP
+                  fieldPath: status.podIP
       volumes:
         - name: config
           persistentVolumeClaim:
