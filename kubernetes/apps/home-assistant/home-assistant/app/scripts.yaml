@@ -12,13 +12,36 @@ data:
     set -e
 
     # Check if the configuration file exists
+    rm -rf /config/configuration.yaml
     if [ ! -f /config/configuration.yaml ]; then
       echo "Configuration file not found, creating a new one"
       cat <<- EOF > /config/configuration.yaml
       default_config:
-        http:
-          use_x_forwarded_for: true
-          trusted_proxies:
-            - 10.0.0.0/8
+      http:
+        use_x_forwarded_for: true
+        trusted_proxies:
+          - 10.0.0.0/8
+      automation: !include automations.yaml
+      script: !include scripts.yaml
+      scene: !include scenes.yaml
     EOF
+    fi
+
+    # Check if the automations file exists
+    if [ ! -f /config/automations.yaml ]; then
+      echo "Automations file not found, creating a new one"
+      touch /config/automations.yaml
+      echo "[]" >> /config/automations.yaml
+    fi
+
+    # Check if the scripts file exists
+    if [ ! -f /config/scripts.yaml ]; then
+      echo "Scripts file not found, creating a new one"
+      touch /config/scripts.yaml
+    fi
+
+    # Check if the scenes file exists
+    if [ ! -f /config/scenes.yaml ]; then
+      echo "Scenes file not found, creating a new one"
+      touch /config/scenes.yaml
     fi
