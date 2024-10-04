@@ -14,3 +14,9 @@ spec:
         kind: HelmRepository
         name: nimbolus
         namespace: system-upgrade-controller
+  values:
+    tolerations:
+      - key: "k3s-controlplane"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
