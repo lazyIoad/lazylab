@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant
+spec:
+  selector:
+    matchLabels:
+      app: home-assistant
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: home-assistant
+      annotations:
+        k8s.v1.cni.cncf.io/networks: multus/macvlan-homelab
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: home-assistant
+          image: ghcr.io/home-assistant/home-assistant:2024.10.0
+          command:
+            - sh
+          args:
+            - "-c"
+            - "/scripts/zigbee.sh && python -m homeassistant --config /config"
+          ports:
+            - name: server
+              containerPort: 8123
+          volumeMounts:
+            - name: home-assistant-config
+              mountPath: /config
+            - name: scripts-config
+              mountPath: /scripts/
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: home-assistant-config
+        - name: zigbee
+          configMap:
+            name: scripts-config
+            defaultMode: 0555
+      nodeSelector:
+        usb: skyconnect

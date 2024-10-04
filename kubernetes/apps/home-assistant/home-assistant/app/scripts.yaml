@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scripts-config
+data:
+  zigbee.sh: |
+    #!/bin/sh
+    socat pty,link=/dev/ttyUSB0,raw,user=0,group=0,mode=777 tcp:127.0.0.1:3333 &
