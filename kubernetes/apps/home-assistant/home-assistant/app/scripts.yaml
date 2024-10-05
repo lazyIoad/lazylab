@@ -6,13 +6,13 @@ metadata:
 data:
   zigbee.sh: |
     #!/bin/sh
-    socat pty,link=/dev/ttyUSB0,raw,user=0,group=0,mode=777 tcp:127.0.0.1:3333 &
+    HOST_CNI_IP=$(echo "$POD_IP" | sed 's/\.[0-9]*$/\.1/') # Cursed, but works
+    socat pty,link=/dev/ttyUSB0,raw,user=0,group=0,mode=777 tcp:$HOST_CNI_IP:3333 &
   config.sh: |
     #!/bin/bash
     set -e
 
     # Check if the configuration file exists
-    rm -rf /config/configuration.yaml
     if [ ! -f /config/configuration.yaml ]; then
       echo "Configuration file not found, creating a new one"
       cat <<- EOF > /config/configuration.yaml

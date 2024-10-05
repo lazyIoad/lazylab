@@ -19,27 +19,27 @@
             - storage=longhorn
             - node.longhorn.io/create-default-disk=true
 
-- name: Add quadratus-3 node taint
+- name: Control plane setup
   become: true
-  hosts: quadratus-3
+  hosts: server
   tasks:
     - name: Make config directory
       ansible.builtin.file:
         path: "/etc/rancher/k3s/config.yaml.d"
         mode: "0755"
         state: directory
-    - name: Create storage config
+    - name: Add node taints
       ansible.builtin.copy:
-        dest: "/etc/rancher/k3s/config.yaml.d/storage-taints.yaml"
+        dest: "/etc/rancher/k3s/config.yaml.d/node-taints.yaml"
         mode: "0644"
         content: |
           ---
           node-taint:
-            - "slow-storage=true:NoSchedule"
+            - "k3s-controlplane=true:NoSchedule"
 
-- name: Set up quadratus-2
+- name: Set up hydrus
   become: true
-  hosts: quadratus-2
+  hosts: hydrus
   tasks:
     - name: Make k3s config directory
       ansible.builtin.file:
@@ -62,13 +62,24 @@
           connection: &zigbee
             accepter: ipv4,tcp,3333
             enable: on
-            connector: serialdev,/dev/ttyUSB0,57600n81,local,nobreak
+            connector: serialdev,/dev/ttyUSB0,115200n81,local,nobreak
             options:
               kickolduser: true
     - name: Install ser2net
       ansible.builtin.apt:
         pkg:
           - ser2net
+    - name: Open ser2net port
+      ansible.builtin.iptables:
+        chain: INPUT
+        protocol: tcp
+        destination_port: 3333
+        jump: ACCEPT
+    - name: Allow INPUT from kubernetes
+      ansible.builtin.iptables:
+        chain: INPUT
+        in_interface: cni0
+        jump: ACCEPT
 
 - name: Install k3s
   ansible.builtin.import_playbook: k3s.orchestration.site
