@@ -51,13 +51,15 @@ spec:
         postgresql:
           auth:
             existingSecret: postgres-password
-          resources: {}
+      primary:
+        resourcesPreset: none
 
     redis:
       enabled: true
       global:
         redis:
-          resources: {}
+      master:
+        resourcesPreset: none
 
     server:
       ingress:
