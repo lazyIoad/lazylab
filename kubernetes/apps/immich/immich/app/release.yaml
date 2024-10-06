@@ -51,9 +51,11 @@ spec:
         postgresql:
           auth:
             existingSecret: postgres-password
+      resources: {}
 
     redis:
       enabled: true
+      resources: {}
 
     server:
       ingress:
