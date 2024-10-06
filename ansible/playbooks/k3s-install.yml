@@ -15,7 +15,7 @@
         mode: "0644"
         content: |
           ---
-          node-label:
+          node-label+:
             - storage=longhorn
             - node.longhorn.io/create-default-disk=true
 
@@ -34,7 +34,7 @@
         mode: "0644"
         content: |
           ---
-          node-taint:
+          node-taint+:
             - "k3s-controlplane=true:NoSchedule"
 
 - name: Set up hydrus
@@ -52,7 +52,7 @@
         mode: "0644"
         content: |
           ---
-          node-label:
+          node-label+:
             - "usb=skyconnect"
     - name: Create ser2net config
       ansible.builtin.copy:
