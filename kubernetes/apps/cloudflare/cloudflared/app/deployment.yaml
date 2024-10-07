@@ -23,7 +23,7 @@ spec:
           args:
             - --token
             - "$(TOKEN)"
-          image: cloudflare/cloudflared:latest
+          image: cloudflare/cloudflared:2024.9.1
           name: cloudflared
           env:
             - name: TOKEN
