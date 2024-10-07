@@ -1,0 +1,19 @@
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: tunnel-token
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword-connect
+  refreshInterval: 1h
+  target:
+    name: tunnel-token
+    template:
+      data:
+        token: "{{ .tunneltoken }}"
+  dataFrom:
+    - extract:
+        key: cloudflare
+        decodingStrategy: Base64
