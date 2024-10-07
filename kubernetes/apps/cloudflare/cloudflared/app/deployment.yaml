@@ -9,10 +9,6 @@ spec:
     matchLabels:
       pod: cloudflared
   template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        pod: cloudflared
     spec:
       containers:
         - command:

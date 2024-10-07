@@ -16,4 +16,4 @@ spec:
   dataFrom:
     - extract:
         key: cloudflare
-        decodingStrategy: Base64
+        decodingStrategy: None
