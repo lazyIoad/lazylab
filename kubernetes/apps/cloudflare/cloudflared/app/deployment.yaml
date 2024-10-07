@@ -31,21 +31,3 @@ spec:
                 secretKeyRef:
                   name: tunnel-token
                   key: token
-            - name: TUNNEL_LOGLEVEL
-              value: "debug"
-          # livenessProbe:
-          #   httpGet:
-          #     path: /ready
-          #     port: 2000
-          #   failureThreshold: 1
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 10
-        - command: ["sleep", "3600"]
-          image: alpine:latest
-          name: debug
-          env:
-            - name: TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: tunnel-token
-                  key: token
