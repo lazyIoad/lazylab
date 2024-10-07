@@ -76,5 +76,4 @@ spec:
           tls:
             - hosts:
                 - photos
-                - photos.lazylab.casa
               secretName: immich-tls
