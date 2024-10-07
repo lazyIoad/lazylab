@@ -62,10 +62,6 @@ spec:
         resourcesPreset: none
 
     server:
-      service:
-        main:
-          annotations:
-            tailscale.com/expose: "true"
       ingress:
         main:
           enabled: true
