@@ -13,6 +13,20 @@
       - cryptsetup
       - dmsetup
 
+# See https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes
+- name: Set net.core.rmem_max
+  ansible.posix.sysctl:
+    name: net.core.rmem_max
+    value: "7500000"
+    state: present
+
+# See https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes
+- name: Set net.core.wmem_max
+  ansible.posix.sysctl:
+    name: net.core.wmem_max
+    value: "7500000"
+    state: present
+
 - name: Reboot hosts
   throttle: 1
   ansible.builtin.reboot:
