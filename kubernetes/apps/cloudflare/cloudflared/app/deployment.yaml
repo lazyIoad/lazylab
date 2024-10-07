@@ -38,3 +38,12 @@ spec:
             failureThreshold: 1
             initialDelaySeconds: 10
             periodSeconds: 10
+        - command: ["sleep", "3600"]
+          image: alpine:latest
+          name: debug
+          env:
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: tunnel-token
+                  key: token
