@@ -12,3 +12,4 @@ resources:
   - metallb-system
   - multus
   - system-upgrade-controller
+  - tailscale
