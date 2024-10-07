@@ -44,3 +44,4 @@
         name: artis3n.tailscale
       vars:
         tailscale_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
+        tailscale_args: "--accept-dns=false"
