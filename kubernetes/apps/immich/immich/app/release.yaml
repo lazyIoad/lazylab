@@ -62,6 +62,11 @@ spec:
         resourcesPreset: none
 
     server:
+      service:
+        main:
+          enabled: true
+          type: LoadBalancer
+          loadBalancerClass: tailscale
       ingress:
         main:
           enabled: true
