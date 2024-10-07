@@ -23,8 +23,6 @@ spec:
           args:
             - --token
             - "$(TOKEN)"
-            - --loglevel
-            - "debug"
           image: cloudflare/cloudflared:2024.9.1
           name: cloudflared
           env:
@@ -33,6 +31,8 @@ spec:
                 secretKeyRef:
                   name: tunnel-token
                   key: token
+            - name: TUNNEL_LOGLEVEL
+              value: "debug"
           livenessProbe:
             httpGet:
               path: /ready
