@@ -23,6 +23,8 @@ spec:
           args:
             - --token
             - "$(TOKEN)"
+            - --loglevel
+            - debug
           image: cloudflare/cloudflared:2024.9.1
           name: cloudflared
           env:
