@@ -25,6 +25,12 @@ spec:
               mountPath: /config
             - name: scripts
               mountPath: /scripts/
+          env:
+            - name: GOOGLE_PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: google-project-id
+                  key: project-id
       containers:
         - name: home-assistant
           image: ghcr.io/home-assistant/home-assistant:2024.10.1
@@ -53,11 +59,6 @@ spec:
                   fieldPath: status.podIP
             - name: TZ
               value: "America/New_York"
-            - name: GOOGLE_PROJECT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: google-project-id
-                  key: project-id
       volumes:
         - name: config
           persistentVolumeClaim:
