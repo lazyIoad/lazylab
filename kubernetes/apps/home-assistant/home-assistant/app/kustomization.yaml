@@ -3,6 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - pvcs.yaml
+  - google-service-account.yaml
   - scripts.yaml
   - deployment.yaml
   - services.yaml
