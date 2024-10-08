@@ -41,11 +41,15 @@ spec:
               mountPath: /config
             - name: scripts
               mountPath: /scripts/
+            - name: localtime
+              mountPath: /etc/localtime
           env:
             - name: POD_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: TZ
+              value: "America/New_York"
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -54,5 +58,8 @@ spec:
           configMap:
             name: scripts-config
             defaultMode: 0555
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
       nodeSelector:
         usb: skyconnect
