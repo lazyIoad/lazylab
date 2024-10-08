@@ -43,6 +43,9 @@ spec:
               mountPath: /scripts/
             - name: localtime
               mountPath: /etc/localtime
+            - name: google-service-account-creds
+              mountPath: /config/secrets
+              readOnly: true
           env:
             - name: POD_IP
               valueFrom:
@@ -61,5 +64,8 @@ spec:
         - name: localtime
           hostPath:
             path: /etc/localtime
+        - name: google-service-account-creds
+          secret:
+            secretName: google-service-account
       nodeSelector:
         usb: skyconnect
