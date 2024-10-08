@@ -27,6 +27,17 @@ data:
     automation: !include automations.yaml
     script: !include scripts.yaml
     scene: !include scenes.yaml
+
+    google_assistant:
+    project_id: $GOOGLE_PROJECT_ID
+    service_account: !include secrets/SERVICE_ACCOUNT.JSON
+    report_state: true
+    expose_by_default: true
+    exposed_domains:
+      - switch
+      - light
+      - scene
+      - group
     EOF
     fi
 
