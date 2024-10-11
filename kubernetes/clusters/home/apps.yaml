@@ -12,6 +12,7 @@ spec:
     name: flux-system
   dependsOn:
     - name: cluster-infra
+    - name: repositories
   path: ./kubernetes/apps
   prune: true
   wait: true
