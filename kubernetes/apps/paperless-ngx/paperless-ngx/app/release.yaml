@@ -26,6 +26,11 @@ spec:
               PAPERLESS_REDIS: redis://paperless-ngx-redis.paperless-ngx.svc.cluster.local:6379
               PAPERLESS_DBENGINE: postgresql
               PAPERLESS_DBHOST: paperless-ngx-db-rw.paperless-ngx.svc.cluster.local
+              PAPERLESS_DBNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-ngx-db-app
+                    key: dbname
               PAPERLESS_DBUSER:
                 valueFrom:
                   secretKeyRef:
