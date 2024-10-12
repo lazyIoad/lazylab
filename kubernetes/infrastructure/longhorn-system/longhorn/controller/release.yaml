@@ -27,6 +27,7 @@ spec:
       defaultDataPath: "/data/longhorn/"
       storageMinimalAvailablePercentage: 10
       storageReservedPercentageForDefaultDisk: 0
+      allowCollectingLonghornUsageMetrics: false
     ingress:
       enabled: true
       ingressClassName: nginx
