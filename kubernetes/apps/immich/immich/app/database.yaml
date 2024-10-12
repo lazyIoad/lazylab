@@ -6,7 +6,7 @@ metadata:
 spec:
   instances: 1
   storage:
-    size: 8Gi
+    size: 50G
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.4
   postgresql:
     shared_preload_libraries:
