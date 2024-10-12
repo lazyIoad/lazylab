@@ -51,6 +51,9 @@ spec:
       #               name: paperless-ngx-db-app
       #               key: password
       #         PAPERLESS_DBSSLMODE: verify-full
+      #         PAPERLESS_DBSSLROOTCERT: /etc/secrets/ca.crt
+      #         PAPERLESS_DBSSLCERT: /etc/secrets/app/tls.cert
+      #         PAPERLESS_DBSSLKEY: /etc/secrrets/app/tls.key
 
       redis:
         containers:
@@ -71,7 +74,6 @@ spec:
         name: paperless-ngx-db-ca
         globalMounts:
           - path: /etc/secrets/ca
-            subPath: ca
             readOnly: true
       db-certs:
         type: secret
