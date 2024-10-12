@@ -16,41 +16,41 @@ spec:
         namespace: flux-system
   values:
     controllers:
-      paperless:
-        containers:
-          app:
-            image:
-              repository: ghcr.io/paperless-ngx/paperless-ngx
-              tag: 2.12.1
-            env:
-              PAPERLESS_SECRET_KEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: paperless-secrets
-                    key: secret-key
-              PAPERLESS_ADMIN_USER:
-                valueFrom:
-                  secretKeyRef:
-                    name: paperless-secrets
-                    key: admin-user
-              PAPERLESS_ADMIN_PASSWORD:
-                valueFrom:
-                  secretKeyRef:
-                    name: paperless-secrets
-                    key: admin-password
-              PAPERLESS_REDIS: redis://redis.paperless-ngx.svc.cluster.local:6379
-              PAPERLESS_DBHOST: paperless-ngx-db-rw.paperless-ngx.svc.cluster.local
-              PAPERLESS_DBUSER:
-                valueFrom:
-                  secretKeyRef:
-                    name: paperless-ngx-db-app
-                    key: user
-              PAPERLESS_DBPASS:
-                valueFrom:
-                  secretKeyRef:
-                    name: paperless-ngx-db-app
-                    key: password
-              PAPERLESS_DBSSLMODE: verify-full
+      # paperless:
+      #   containers:
+      #     app:
+      #       image:
+      #         repository: ghcr.io/paperless-ngx/paperless-ngx
+      #         tag: 2.12.1
+      #       env:
+      #         PAPERLESS_SECRET_KEY:
+      #           valueFrom:
+      #             secretKeyRef:
+      #               name: paperless-secrets
+      #               key: secret-key
+      #         PAPERLESS_ADMIN_USER:
+      #           valueFrom:
+      #             secretKeyRef:
+      #               name: paperless-secrets
+      #               key: admin-user
+      #         PAPERLESS_ADMIN_PASSWORD:
+      #           valueFrom:
+      #             secretKeyRef:
+      #               name: paperless-secrets
+      #               key: admin-password
+      #         PAPERLESS_REDIS: redis://redis.paperless-ngx.svc.cluster.local:6379
+      #         PAPERLESS_DBHOST: paperless-ngx-db-rw.paperless-ngx.svc.cluster.local
+      #         PAPERLESS_DBUSER:
+      #           valueFrom:
+      #             secretKeyRef:
+      #               name: paperless-ngx-db-app
+      #               key: user
+      #         PAPERLESS_DBPASS:
+      #           valueFrom:
+      #             secretKeyRef:
+      #               name: paperless-ngx-db-app
+      #               key: password
+      #         PAPERLESS_DBSSLMODE: verify-full
 
       redis:
         containers:
