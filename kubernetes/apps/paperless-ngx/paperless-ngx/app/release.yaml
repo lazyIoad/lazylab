@@ -16,44 +16,50 @@ spec:
         namespace: flux-system
   values:
     controllers:
-      # paperless:
-      #   containers:
-      #     app:
-      #       image:
-      #         repository: ghcr.io/paperless-ngx/paperless-ngx
-      #         tag: 2.12.1
-      #       env:
-      #         PAPERLESS_SECRET_KEY:
-      #           valueFrom:
-      #             secretKeyRef:
-      #               name: paperless-secrets
-      #               key: secret-key
-      #         PAPERLESS_ADMIN_USER:
-      #           valueFrom:
-      #             secretKeyRef:
-      #               name: paperless-secrets
-      #               key: admin-user
-      #         PAPERLESS_ADMIN_PASSWORD:
-      #           valueFrom:
-      #             secretKeyRef:
-      #               name: paperless-secrets
-      #               key: admin-password
-      #         PAPERLESS_REDIS: redis://redis.paperless-ngx.svc.cluster.local:6379
-      #         PAPERLESS_DBHOST: paperless-ngx-db-rw.paperless-ngx.svc.cluster.local
-      #         PAPERLESS_DBUSER:
-      #           valueFrom:
-      #             secretKeyRef:
-      #               name: paperless-ngx-db-app
-      #               key: user
-      #         PAPERLESS_DBPASS:
-      #           valueFrom:
-      #             secretKeyRef:
-      #               name: paperless-ngx-db-app
-      #               key: password
-      #         PAPERLESS_DBSSLMODE: verify-full
-      #         PAPERLESS_DBSSLROOTCERT: /etc/secrets/ca.crt
-      #         PAPERLESS_DBSSLCERT: /etc/secrets/app/tls.cert
-      #         PAPERLESS_DBSSLKEY: /etc/secrrets/app/tls.key
+      paperless:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/paperless-ngx/paperless-ngx
+              tag: 2.12.1
+            env:
+              PAPERLESS_REDIS: redis://redis.paperless-ngx.svc.cluster.local:6379
+              PAPERLESS_DBENGINE: postgresql
+              PAPERLESS_DBHOST: paperless-ngx-db-rw.paperless-ngx.svc.cluster.local
+              PAPERLESS_DBUSER:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-ngx-db-app
+                    key: user
+              PAPERLESS_DBPASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-ngx-db-app
+                    key: password
+              PAPERLESS_DBSSLMODE: verify-full
+              PAPERLESS_DBSSLROOTCERT: /etc/secrets/ca/ca.crt
+              PAPERLESS_DBSSLCERT: /etc/secrets/app/tls.cert
+              PAPERLESS_DBSSLKEY: /etc/secrrets/app/tls.key
+              PAPERLESS_DATA_DIR: /data
+              PAPERLESS_MEDIA_ROOT: /data
+              PAPERLESS_SECRET_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-secrets
+                    key: secret-key
+              PAPERLESS_URL: paperless.lazylab.casa
+              PAPERLESS_ADMIN_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-secrets
+                    key: admin-user
+              PAPERLESS_ADMIN_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-secrets
+                    key: admin-password
+              PAPERLESS_TASK_WORKERS: 2
+              PAPERLESS_TIME_ZONE: America/New_York
 
       redis:
         containers:
@@ -62,11 +68,6 @@ spec:
               repository: registry.redict.io/redict
               tag: 7.3.1
             nameOverride: redis
-          debug:
-            command: ["sleep", "3600"]
-            image:
-              repository: busybox
-              tag: 1.28
 
     persistence:
       db-ca:
@@ -82,40 +83,40 @@ spec:
           - path: /etc/secrets/app
             readOnly: true
 
-    #   data:
-    #     size: 100G
-    #     accessMode: ReadWriteOnce
-    #     advancedMounts:
-    #       paperless:
-    #         app:
-    #           - path: /data
+    data:
+      size: 100G
+      accessMode: ReadWriteOnce
+      advancedMounts:
+        paperless:
+          app:
+            - path: /data
 
     service:
-      # app:
-      #   controller: paperless
-      #   ports:
-      #     http:
-      #       port: 8000
+      app:
+        controller: paperless
+        ports:
+          http:
+            port: 8000
       redis:
         controller: redis
         ports:
           http:
             port: 6379
 
-    # ingress:
-    #   app:
-    #     className: nginx
-    #     annotations:
-    #       cert-manager.io/cluster-issuer: letsencrypt-production
-    #       external-dns.alpha.kubernetes.io/hostname: paperless.lazylab.casa
-    #     hosts:
-    #       - host: paperless.lazylab.casa
-    #         paths:
-    #           - path: /
-    #             service:
-    #               identifier: app
-    #               port: http
-    #     tls:
-    #       - hosts:
-    #           - paperless.lazylab.casa
-    #         secretName: paperless-ngx-tls
+    ingress:
+      app:
+        className: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          external-dns.alpha.kubernetes.io/hostname: paperless.lazylab.casa
+        hosts:
+          - host: paperless.lazylab.casa
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - paperless.lazylab.casa
+            secretName: paperless-ngx-tls
