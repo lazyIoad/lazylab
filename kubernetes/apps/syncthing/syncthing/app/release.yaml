@@ -1,0 +1,141 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: syncthing
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    controllers:
+      syncthing:
+        annotations:
+          k8s.v1.cni.cncf.io/networks: multus/macvlan-homelab
+        containers:
+          app:
+            image:
+              repository: lscr.io/linuxserver/syncthing
+              tag: 1.27.12
+            ports:
+              - name: web-ui
+                containerPort: 8384
+              - name: syncthing-tcp
+                containerPort: 32222
+                protocol: TCP
+              - name: syncthing-udp
+                containerPort: 32222
+                protocol: UDP
+          nginx:
+            image:
+              repository: registry.hub.docker.com/library/nginx
+              tag: 1.27.2
+            ports:
+              - containerPort: 80
+                name: http
+        initContainers:
+          create-dirs:
+            image:
+              repository: registry.hub.docker.com/library/busybox
+              tag: 1.36.1
+            command: ["sh", "/init-scripts/init.sh"]
+
+    persistence:
+      init-scripts:
+        type: configMap
+        name: init-scripts-config
+        advancedMounts:
+          syncthing:
+            create-dirs:
+              - path: /init-scripts
+      nginx-config:
+        type: configMap
+        name: nginx-config
+        advancedMounts:
+          syncthing:
+            nginx:
+              - path: /etc/nginx/conf.d
+      nginx-htpasswd:
+        type: secret
+        name: nginx-htpasswd
+        advancedMounts:
+          syncthing:
+            nginx:
+              - path: /etc/nginx/secret
+                readOnly: true
+      config:
+        size: 1G
+        accessMode: ReadWriteOnce
+        advancedMounts:
+          paperless:
+            app:
+              - path: /config
+      data:
+        size: 200G
+        accessMode: ReadWriteOnce
+        globalMounts:
+          - path: /data
+
+    service:
+      nginx:
+        controller: syncthing
+        ports:
+          http:
+            port: 80
+      syncthing-gui:
+        controller: syncthing
+        ports:
+          http:
+            port: 8384
+      syncthing-protocol:
+        controller: syncthing
+        ports:
+          syncthing-tcp:
+            protocol: TCP
+            port: 32222
+            targetPort: 32222
+          syncthing-udp:
+            protocol: UDP
+            port: 32222
+            targetPort: 32222
+
+    ingress:
+      syncthing-gui:
+        className: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          external-dns.alpha.kubernetes.io/hostname: syncthing.lazylab.casa
+        hosts:
+          - host: syncthing.lazylab.casa
+            paths:
+              - path: /
+                service:
+                  identifier: syncthing-gui
+                  port: http
+        tls:
+          - hosts:
+              - syncthing.lazylab.casa
+            secretName: syncthing-gui-tls
+      nginx:
+        className: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          external-dns.alpha.kubernetes.io/hostname: box.lazylab.casa
+        hosts:
+          - host: box.lazylab.casa
+            paths:
+              - path: /
+                service:
+                  identifier: nginx
+                  port: http
+        tls:
+          - hosts:
+              - box.lazylab.casa
+            secretName: box-tls
