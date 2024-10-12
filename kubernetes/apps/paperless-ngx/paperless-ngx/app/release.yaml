@@ -52,7 +52,7 @@ spec:
                   secretKeyRef:
                     name: paperless-secrets
                     key: secret-key
-              PAPERLESS_URL: paperless.lazylab.casa
+              PAPERLESS_URL: https://paperless.lazylab.casa
               PAPERLESS_ADMIN_USER:
                 valueFrom:
                   secretKeyRef:
