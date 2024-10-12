@@ -87,14 +87,13 @@ spec:
         globalMounts:
           - path: /etc/secrets/app
             readOnly: true
-
-    data:
-      size: 100G
-      accessMode: ReadWriteOnce
-      advancedMounts:
-        paperless:
-          app:
-            - path: /data
+      data:
+        size: 100G
+        accessMode: ReadWriteOnce
+        advancedMounts:
+          paperless:
+            app:
+              - path: /data
 
     service:
       app:
