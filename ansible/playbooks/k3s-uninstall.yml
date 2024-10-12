@@ -11,10 +11,10 @@
       ansible.builtin.file:
         path: "/etc/rancher/k3s/config.yaml.d"
         state: absent
-    - name: Delete longhorn data directory
-      ansible.builtin.file:
-        path: "/data/longhorn"
-        state: absent
+    # - name: Delete longhorn data directory
+    #   ansible.builtin.file:
+    #     path: "/data/longhorn"
+    #     state: absent
     - name: Delete longhorn data directory
       ansible.builtin.file:
         path: "/var/lib/longhorn"
