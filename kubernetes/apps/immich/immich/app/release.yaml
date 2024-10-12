@@ -41,7 +41,8 @@ spec:
     immich:
       persistence:
         library:
-          existingClaim: immich-data
+          size: 500Gi
+          accessMode: ReadWriteOnce
 
     machine-learning:
       enabled: true
