@@ -48,14 +48,14 @@ spec:
               repository: registry.redict.io/redict
               tag: 7.3.1
 
-    persistence:
-      data:
-        size: 100G
-        accessMode: ReadWriteOnce
-        advancedMounts:
-          paperless:
-            app:
-              - path: /data
+    # persistence:
+    #   data:
+    #     size: 100G
+    #     accessMode: ReadWriteOnce
+    #     advancedMounts:
+    #       paperless:
+    #         app:
+    #           - path: /data
 
     service:
       # app:
