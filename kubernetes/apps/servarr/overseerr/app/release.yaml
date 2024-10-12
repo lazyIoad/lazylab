@@ -1,0 +1,59 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: overseerr
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    controllers:
+      overseerr:
+        containers:
+          app:
+            image:
+              repository: registry.hub.docker.com/sctx/overseerr
+              tag: a2c25d5e4b1ae7ccbe3e64910de5472b629f49d3
+            env:
+              TZ: America/New_York
+    persistence:
+      data:
+        size: 5Gi
+        accessMode: ReadWriteOnce
+        advancedMounts:
+          overseerr:
+            app:
+              - path: /app/config
+
+    service:
+      app:
+        controller: overseerr
+        ports:
+          http:
+            port: 5055
+
+    ingress:
+      app:
+        className: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          external-dns.alpha.kubernetes.io/hostname: overseerr.lazylab.casa
+        hosts:
+          - host: overseerr.lazylab.casa
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - overseerr.lazylab.casa
+            secretName: overseerr-tls
