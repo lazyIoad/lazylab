@@ -5,5 +5,4 @@ resources:
   - redis.yaml
   - database.yaml
   - pvcs.yaml
-  - postgres-password.yaml
   - release.yaml

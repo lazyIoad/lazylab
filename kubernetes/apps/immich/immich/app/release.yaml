@@ -13,22 +13,28 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: immich
-        namespace: immich
+        namespace: flux-system
   values:
     env:
       - name: REDIS_HOSTNAME
-        value: immich-redis-master
+        value: immich-redis.immich.svc.cluster.local
       - name: DB_HOSTNAME
-        value: immich-postgresql
+        value: immich-db-rw.immich.svc.cluster.local
       - name: DB_USERNAME
-        value: immich
+        valueFrom:
+          secretKeyRef:
+            name: immich-db-app
+            key: user
       - name: DB_PASSWORD
         valueFrom:
           secretKeyRef:
-            name: postgres-password
+            name: immich-db-app
             key: password
       - name: DB_DATABASE_NAME
-        value: immich
+        valueFrom:
+          secretKeyRef:
+            name: immich-db-app
+            key: dbname
       - name: IMMICH_MACHINE_LEARNING_URL
         value: http://immich-machine-learning:3003
 
@@ -44,22 +50,6 @@ spec:
           type: pvc
           accessMode: ReadWriteOnce
           storageClass: longhorn
-
-    postgresql:
-      enabled: true
-      global:
-        postgresql:
-          auth:
-            existingSecret: postgres-password
-      primary:
-        resourcesPreset: none
-
-    redis:
-      enabled: true
-      global:
-        redis:
-      master:
-        resourcesPreset: none
 
     server:
       ingress:
