@@ -1,0 +1,88 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: paperless-ngx
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    controllers:
+      # paperless:
+      #   containers:
+      #     app:
+      #       image:
+      #         repository: ghcr.io/paperless-ngx/paperless-ngx
+      #         tag: 2.12.1
+      #       env:
+      #         PAPERLESS_SECRET_KEY:
+      #           valueFrom:
+      #             secretKeyRef:
+      #               name: paperless-secrets
+      #               key: secret-key
+      #         PAPERLESS_ADMIN_USER:
+      #           valueFrom:
+      #             secretKeyRef:
+      #               name: paperless-secrets
+      #               key: admin-user
+      #         PAPERLESS_ADMIN_PASSWORD:
+      #           valueFrom:
+      #             secretKeyRef:
+      #               name: paperless-secrets
+      #               key: admin-password
+      #         PAPERLESS_REDIS: redis://redis.paperless-ngx.svc.cluster.local:6379
+      #         PAPERLESS_DBHOST: postgres.paperless-ngx.svc.cluster.local
+
+      redis:
+        containers:
+          app:
+            image:
+              repository: registry.redict.io/redict
+              tag: 7.3.1
+
+    persistence:
+      data:
+        size: 100G
+        accessMode: ReadWriteOnce
+        advancedMounts:
+          paperless:
+            app:
+              - path: /data
+
+    service:
+      # app:
+      #   controller: paperless
+      #   ports:
+      #     http:
+      #       port: 8000
+      redis:
+        controller: redis
+        ports:
+          http:
+            port: 6379
+
+    # ingress:
+    #   app:
+    #     className: nginx
+    #     annotations:
+    #       cert-manager.io/cluster-issuer: letsencrypt-production
+    #       external-dns.alpha.kubernetes.io/hostname: paperless.lazylab.casa
+    #     hosts:
+    #       - host: paperless.lazylab.casa
+    #         paths:
+    #           - path: /
+    #             service:
+    #               identifier: app
+    #               port: http
+    #     tls:
+    #       - hosts:
+    #           - paperless.lazylab.casa
+    #         secretName: paperless-ngx-tls
