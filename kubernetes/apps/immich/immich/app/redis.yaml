@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: redis
+  name: immich-redis
 spec:
   interval: 10m
   chart:
@@ -22,7 +22,6 @@ spec:
             image:
               repository: registry.redict.io/redict
               tag: 7.3.1
-            nameOverride: redis
 
     service:
       redis:
