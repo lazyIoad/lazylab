@@ -47,6 +47,7 @@ spec:
             image:
               repository: registry.redict.io/redict
               tag: 7.3.1
+            nameOverride: redis
 
     # persistence:
     #   data:
