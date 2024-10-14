@@ -10,7 +10,6 @@ resources:
   - external-secrets
   - ingress-nginx
   - longhorn-system
-  - metallb-system
   - multus
   - system-upgrade-controller
   - tailscale
