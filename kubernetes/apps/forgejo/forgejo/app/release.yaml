@@ -59,7 +59,7 @@ spec:
     service:
       ssh:
         type: LoadBalancer
-        loadBalancerClass: tailscale
+        loadBalancerClass: nginx
     ingress:
       enabled: true
       className: nginx

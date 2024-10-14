@@ -19,3 +19,5 @@ spec:
       kind: Deployment
       service:
         loadBalancerClass: tailscale
+    tcp:
+      "22": "forgejo/forgejo-ssh:22" # SSH passthrough for forgejo
