@@ -58,8 +58,8 @@ spec:
               key: password
     service:
       ssh:
-        annotations:
-          tailscale.com/expose: "true"
+        type: LoadBalancer
+        loadBalancerClass: tailscale
     ingress:
       enabled: true
       className: nginx
