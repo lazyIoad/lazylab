@@ -1,11 +1,12 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrepository-source-v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/ocirepository-source-v1beta2.json
 apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
+kind: OCIRepository
 metadata:
   name: forgejo
   namespace: flux-system
 spec:
   interval: 1h
-  type: oci
-  url: oci://code.forgejo.org/forgejo-helm
+  url: oci://code.forgejo.org/forgejo-helm/forgejo
+  ref:
+    semver: "9.0.0"
