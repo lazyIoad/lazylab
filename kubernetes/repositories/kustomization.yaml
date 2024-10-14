@@ -5,4 +5,5 @@ kind: Kustomization
 resources:
   - bjw-s.yaml
   - cloudnative-pg.yaml
+  - forgejo.yaml
   - immich.yaml
