@@ -1,0 +1,80 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: forgejo
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: forgejo
+      version: 9.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: forgejo
+        namespace: flux-system
+  values:
+    postgresql:
+      enabled: false
+    postgresql-ha:
+      enabled: false
+    redis:
+      enabled: false
+    redis-cluster:
+      enabled: false
+    persistence:
+      enabled: true
+      storageClass: longhorn
+    gitea:
+      admin:
+        existingSecret: forgejo-admin
+      config:
+        queue:
+          TYPE: redis
+          CONN_STR: redis://forgejo-redis.forgejo.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s
+        session:
+          PROVIDER: redis
+          PROVIDER_CONFIG: redis://forgejo-redis.forgejo.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s
+        cache:
+          ADAPTER: redis
+          HOST: redis://forgejo-redis.forgejo.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s
+        database:
+          DB_TYPE: postgres
+          SSL_MODE: require
+          HOST: forgejo-db-rw.forgejo.svc.cluster.local:5432
+      additionalConfigFromEnvs:
+        - name: FORGEJO__DATABASE__NAME
+          valueFrom:
+            secretKeyRef:
+              name: forgejo-db-app
+              key: dbname
+        - name: FORGEJO__DATABASE__USER
+          valueFrom:
+            secretKeyRef:
+              name: forgejo-db-app
+              key: user
+        - name: FORGEJO__DATABASE__PASSWD
+          valueFrom:
+            secretKeyRef:
+              name: forgejo-db-app
+              key: password
+    service:
+      ssh:
+        annotations:
+          tailscale.com/expose: "true"
+    ingress:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        external-dns.alpha.kubernetes.io/hostname: git.lazylab.casa
+      hosts:
+        - host: git.lazylab.casa
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - git.lazylab.casa
+          secretName: forgejo-tls

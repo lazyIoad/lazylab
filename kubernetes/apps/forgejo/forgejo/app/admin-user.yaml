@@ -1,0 +1,21 @@
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: forgejo-admin
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword-connect
+  refreshInterval: 1h
+  target:
+    name: forgejo-admin
+    template:
+      data:
+        username: "{{ .adminuser }}"
+        password: "{{ .adminpass }}"
+        email: "{{ .adminemail }}"
+  dataFrom:
+    - extract:
+        key: forgejo
+        decodingStrategy: None

@@ -10,8 +10,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  dependsOn:
-    - name: cloudnative-pg
   path: ./kubernetes/apps/forgejo/forgejo/app
   prune: true
   interval: 30m
