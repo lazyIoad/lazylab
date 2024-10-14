@@ -44,7 +44,7 @@ spec:
               PAPERLESS_DBSSLMODE: verify-full
               PAPERLESS_DBSSLROOTCERT: /etc/secrets/ca/ca.crt
               PAPERLESS_DBSSLCERT: /etc/secrets/app/tls.cert
-              PAPERLESS_DBSSLKEY: /etc/secrrets/app/tls.key
+              PAPERLESS_DBSSLKEY: /etc/secrets/app/tls.key
               PAPERLESS_DATA_DIR: /data
               PAPERLESS_MEDIA_ROOT: /data
               PAPERLESS_SECRET_KEY:
