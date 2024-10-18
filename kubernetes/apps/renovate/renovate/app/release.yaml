@@ -51,16 +51,6 @@ spec:
               ]
             }
           },
-          "packageRules": [
-            {
-              "matchUpdateTypes": ["minor", "patch"],
-              "automerge": true
-            },
-            {
-              "matchPackageNames": ["k3s"],
-              "automerge": false
-            }
-          ],
           "ignoreTests": true,
           "prHourlyLimit": 0,
           "kubernetes": {
