@@ -9,4 +9,4 @@ spec:
   interval: 1h
   url: oci://code.forgejo.org/forgejo-helm/forgejo
   ref:
-    semver: "9.0.0"
+    semver: 10.0.1 # TODO: not detected by renovate
