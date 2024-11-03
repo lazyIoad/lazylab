@@ -18,7 +18,7 @@ spec:
       terminationGracePeriodSeconds: 60
       initContainers:
         - name: create-config
-          image: registry.hub.docker.com/library/busybox:1.36.1
+          image: registry.hub.docker.com/library/busybox:1.37.0
           command: ["sh", "/scripts/config.sh"]
           volumeMounts:
             - name: config
