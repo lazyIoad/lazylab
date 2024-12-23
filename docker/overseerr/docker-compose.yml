@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+name: overseerr
+
+services:
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:1.33.2@sha256:77924471b1e4f3af497b44c3d398339ef0e4444c6c513bc6acdc14c54bf017f7
+    container_name: overseerr
+    restart: unless-stopped
+    ports:
+      - 5055:5055
+    volumes:
+      - overseerr_config:/config
+    networks:
+      - caddy
+      - public
+
+volumes:
+  overseerr_config:

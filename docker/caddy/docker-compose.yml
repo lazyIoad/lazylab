@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+name: caddy
+
+services:
+  caddy:
+    image: ghcr.io/iarekylew00t/caddy-cloudflare:2.8.4@sha256:4db3e80042cf20bda4efb51d632bae245e496779357b4cb2e2c489effaad40ce
+    container_name: caddy
+    restart: unless-stopped
+    environment:
+      CLOUDFLARE_TOKEN: ${CLOUDFLARE_TOKEN}
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - caddy
+
+volumes:
+  caddy_data:
+  caddy_config:

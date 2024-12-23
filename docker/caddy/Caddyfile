@@ -1,0 +1,15 @@
+{
+	acme_dns cloudflare {$CLOUDFLARE_TOKEN}
+}
+
+overseerr.lazylab.casa {
+	reverse_proxy overseerr:5055
+}
+
+immich.lazylab.casa {
+	reverse_proxy immich_server:2283
+}
+
+syncthing.lazylab.casa {
+	reverse_proxy syncthing:8384
+}
