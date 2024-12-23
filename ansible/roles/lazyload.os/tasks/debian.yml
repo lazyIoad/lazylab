@@ -2,17 +2,14 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/tasks
 - name: Perform an apt-upgrade
   ansible.builtin.apt:
-    upgrade: full
+    upgrade: dist
     update_cache: true
 
 - name: Install other dependencies
   ansible.builtin.apt:
     pkg:
-      - open-iscsi
-      - nfs-common
-      - cryptsetup
-      - dmsetup
       - chrony
+      - rsync
 
 # See https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes
 - name: Set net.core.rmem_max
@@ -28,9 +25,14 @@
     value: "7500000"
     state: present
 
-- name: Reboot hosts
-  throttle: 1
+- name: Check if reboot required
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+  register: reboot_required_file
+
+- name: Reboot if required
   ansible.builtin.reboot:
+  when: reboot_required_file.stat.exists
 
 - name: Remove dependencies that are no longer required
   ansible.builtin.apt:

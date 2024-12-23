@@ -44,7 +44,7 @@ spec:
           create-dirs:
             image:
               repository: registry.hub.docker.com/library/busybox
-              tag: 1.36.1
+              tag: 1.36.1 # TODO: not detected by renovate
             command: ["sh", "/init-scripts/init.sh"]
 
     persistence:

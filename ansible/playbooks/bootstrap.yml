@@ -1,7 +1,7 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook
 - name: Host setup
-  hosts: k3s_cluster
+  hosts: homelab
   gather_facts: true
   become: true
   tasks:

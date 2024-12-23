@@ -2,9 +2,15 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/inventory.json
 docker:
   hosts:
-    malus:
-      ansible_host: 20.96.203.181
-      hostname: malus
+    avion0:
+
+homelab:
+  children:
+    avion:
+      hosts:
+        avion0:
+          ansible_host: 192.168.4.41
+          hostname: avion0
 
 k3s_cluster:
   children:
@@ -28,12 +34,14 @@ k3s_cluster:
         kuromori:
           ansible_host: 192.168.4.97
           hostname: kuromori
-        avion:
-          ansible_host: 192.168.4.96
-          hostname: avion
 
 storage:
   hosts:
     hydrus:
     kuromori:
-    avion:
+
+nas:
+  hosts:
+    dirge:
+      ansible_host: 192.168.4.119
+      hostname: dirge
