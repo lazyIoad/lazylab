@@ -8,6 +8,6 @@ include:
   - path: watchtower/docker-compose.yml
   - path: overseerr/docker-compose.yml
   - path: syncthing/docker-compose.yml
-  # - path: immich/docker-compose.yml
+  - path: immich/docker-compose.yml
   # renovate
   # paperless

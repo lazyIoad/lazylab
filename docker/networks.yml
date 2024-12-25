@@ -2,4 +2,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
 networks:
   caddy:
+  immich:
   public:
