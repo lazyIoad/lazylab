@@ -3,6 +3,7 @@
 include:
   - path: ./networks.yml
   - path: cloudflare/docker-compose.yml
+  - path: datadog/docker-compose.yml
   - path: caddy/docker-compose.yml
   - path: watchtower/docker-compose.yml
   - path: overseerr/docker-compose.yml

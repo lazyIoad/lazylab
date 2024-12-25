@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+name: datadog
+
+services:
+  datadog:
+    image: datadog/agent:7.60.1-jmx@sha256:24e957040cc0a54668aa5ef42c08a64d14f78ec6e7852ce644b5356e589924a9
+    container_name: dd-agent
+    restart: unless-stopped
+    environment:
+      - DD_API_KEY=${DATADOG_API_KEY}
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+      - DD_APM_ENABLED=true
+      - DD_APM_NON_LOCAL_TRAFFIC=true
+      - DD_AGENT_HOST=dd-agent
+      - DD_SITE=datadoghq.com
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_PROCESS_CONFIG_PROCESS_COLLECTION_ENABLED=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /etc/passwd:/etc/passwd:ro
