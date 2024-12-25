@@ -9,5 +9,4 @@ include:
   - path: overseerr/docker-compose.yml
   - path: syncthing/docker-compose.yml
   - path: immich/docker-compose.yml
-  # renovate
-  # paperless
+  - path: paperless-ngx/docker-compose.yml

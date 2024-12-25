@@ -13,3 +13,7 @@ immich.lazylab.casa {
 syncthing.lazylab.casa {
 	reverse_proxy syncthing:8384
 }
+
+paperless.lazylab.casa {
+	reverse_proxy paperless_server:8000
+}

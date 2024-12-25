@@ -1,0 +1,73 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+name: paperless-ngx
+
+services:
+  paperless_broker:
+    container_name: paperless_broker
+    image: docker.io/redis:7.4.1@sha256:bb142a9c18ac18a16713c1491d779697b4e107c22a97266616099d288237ef47
+    restart: unless-stopped
+    volumes:
+      - paperless_redisdata:/data
+    networks:
+      - paperless
+
+  paperless_database:
+    container_name: paperless_postgres
+    image: docker.io/postgres:16.6@sha256:c7afedc5c15994625b5be4cb4736c030271b55be0360b78a99c90ec2fbe658b6
+    restart: unless-stopped
+    volumes:
+      - paperless_db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - paperless
+
+  paperless_server:
+    container_name: paperless_server
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.13.5@sha256:f7b18415da5631c0e75ad26dafd58897a78780f47a24c76bf1f862f64308c9b5
+    restart: unless-stopped
+    depends_on:
+      - paperless_database
+      - paperless_broker
+      - paperless_gotenberg
+      - paperless_tika
+    volumes:
+      - paperless_data:/usr/src/paperless/data
+      - paperless_media:/usr/src/paperless/media
+    environment:
+      PAPERLESS_REDIS: redis://paperless_broker:6379
+      PAPERLESS_DBHOST: paperless_postgres
+      PAPERLESS_DBPASS: ${DB_PASSWORD}
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless_gotenberg:3000
+      PAPERLESS_TIKA_ENDPOINT: http://paperless_tika:9998
+    networks:
+      - paperless
+      - caddy
+
+  paperless_gotenberg:
+    container_name: paperless_gotenberg
+    image: docker.io/gotenberg/gotenberg:8.15.2@sha256:ddcbeec3d58ef77391e871e9386deca5e06c816fe651f6cfe96b218c268ef165
+    restart: unless-stopped
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
+    networks:
+      - paperless
+
+  paperless_tika:
+    container_name: paperless_tika
+    image: docker.io/apache/tika:3.0.0.0@sha256:6e262f5b11168dbeec75217e5560d26b18f99d940d5c0fc078da66cbbe3e01cf
+    restart: unless-stopped
+    networks:
+      - paperless
+
+volumes:
+  paperless_data:
+  paperless_media:
+  paperless_db:
+  paperless_redisdata:

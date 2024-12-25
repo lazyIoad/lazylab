@@ -3,4 +3,5 @@
 networks:
   caddy:
   immich:
+  paperless:
   public:
