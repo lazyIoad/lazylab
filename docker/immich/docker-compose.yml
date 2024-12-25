@@ -10,8 +10,8 @@ services:
       - immich_data:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
     depends_on:
-      - redis
-      - database
+      - immich_redis
+      - immich_database
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
     restart: unless-stopped
@@ -32,7 +32,7 @@ services:
     networks:
       - immich
 
-  redis:
+  immich_redis:
     container_name: immich_redis
     image: docker.io/redis:6.2-alpine@sha256:eaba718fecd1196d88533de7ba49bf903ad33664a92debb24660a922ecd9cac8
     healthcheck:
@@ -41,7 +41,7 @@ services:
     networks:
       - immich
 
-  database:
+  immich_database:
     container_name: immich_postgres
     image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
     environment:
