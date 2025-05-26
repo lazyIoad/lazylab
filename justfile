@@ -27,7 +27,7 @@ bootstrap: ansible-bootstrap k8s-bootstrap
 # Bootstrap sops secrets in the cluster
 sops-bootstrap:
   cat $SOPS_AGE_KEY_FILE | kubectl create secret generic sops-keys \
-    --namespace flux-system \
+    --namespace default \
     --from-file age.agekey=/dev/stdin
 
 # Bootstrap Flux onto the cluster
