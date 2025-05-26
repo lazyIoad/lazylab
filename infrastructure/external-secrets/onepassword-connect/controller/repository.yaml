@@ -1,9 +1,0 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrepository-source-v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: onepassword-connect
-spec:
-  interval: 1h
-  url: https://1password.github.io/connect-helm-charts/
