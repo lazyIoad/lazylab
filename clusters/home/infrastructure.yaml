@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-infra
+  namespace: default
+spec:
+  interval: 10m
+  wait: true
+  timeout: 5m
+  retryInterval: 1m
+  prune: true
+  force: false
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: repositories
+  path: ./infrastructure
